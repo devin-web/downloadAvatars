@@ -14,12 +14,9 @@ module.exports = {
      'pass': constants.accessToken,
       }
     }
-    //var extension  = "";
-    var noErrors = true;
     var req = request( options, function saveFile(err, data){
       if(err){
         console.log(err);
-        noErrors = false;
       }
       else {
         writeFileOutWithExtension( data.headers['content-type'].split('/')[1] );

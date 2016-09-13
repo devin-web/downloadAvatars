@@ -46,7 +46,8 @@ function main(){
 
           console.log( "Downloaing", parsedBody.length, "avatars..." );
           for( var i = 0; i < parsedBody.length; i++){
-            var fileParts = parsedBody[i].url.split("/"); //url contains the user name in the last position
+            //url contains the (unique) user name in the last position
+            var fileParts = parsedBody[i].url.split("/");
             var filename = fileParts[fileParts.length-1];
             getImages.downloadImageByURL(
               parsedBody[i].avatar_url, "./avatars/" + filename );
