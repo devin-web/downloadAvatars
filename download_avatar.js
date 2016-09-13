@@ -52,7 +52,14 @@ function main(){
       }
       else {
         var parsedBody = JSON.parse(result.body);
-        if( parsedBody.message !== "Bad credentials" ){
+        if( parsedBody.message === "Bad credentials" ){
+          console.log("Fatal error: bad credentials");
+        }
+        else if( parsedBody.message === "Not Found"){
+          console.log( "Fatal error: repository or user not found" );
+        }
+        else {
+          //console.log( parsedBody );
           mkdirSync( "./avatars" );
 
           for( var i = 0; i < parsedBody.length; i++){
@@ -61,9 +68,7 @@ function main(){
             getImages.downloadImageByURL(
               parsedBody[i].avatar_url, "./avatars/" + filename );
           }
-        }
-        else {//bad credentials
-          console.log("Fatal error: bad credentials");
+          //*/
         }
       }
     });
