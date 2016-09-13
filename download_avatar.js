@@ -16,25 +16,7 @@ var mkdirSync = function (path) {
     }
   }
 }
-// var envExists = tryReadFile();
-// //false;
-// function tryReadFile()
-// {
-//   if( fs.readFile("./.env", (err) => {
-//     if(err){
-//       return false;
-//     }
-//     else
-//     {
-//       return true;
-//     }
-//   }));
-// }
-// while( envExists === undefined ){
-//   //sleep
-//   console.log( "Testing for existance of .env file" );
-// }
-//console.log( "envExists", envExists );
+
 main();
 
 function main(){
@@ -42,7 +24,8 @@ function main(){
   if( myArgs.length !== 2 ){
     console.log("Error: expected 2 and only 2 arguments, the user/org and the repository");
   }
-  else if( process.env.GITHUB_API_TOKEN === undefined ){
+  else if(  process.env.GITHUB_API_TOKEN === undefined ||
+            process.env.GITHUB_USER === undefined ){
     console.log(".env doesn't exist or is not readable for key(GIT_HUB_API_TOKEN). " );
   }
   else{
@@ -59,16 +42,16 @@ function main(){
           console.log( "Fatal error: repository or user not found" );
         }
         else {
-          //console.log( parsedBody );
           mkdirSync( "./avatars" );
 
+          console.log( "Downloaing", parsedBody.length, "avatars..." );
           for( var i = 0; i < parsedBody.length; i++){
-            var fileParts = parsedBody[i].url.split("/");
+            var fileParts = parsedBody[i].url.split("/"); //url contains the user name in the last position
             var filename = fileParts[fileParts.length-1];
             getImages.downloadImageByURL(
               parsedBody[i].avatar_url, "./avatars/" + filename );
           }
-          //*/
+          console.log("Completed download of avatars to avatars directory");
         }
       }
     });
