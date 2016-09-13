@@ -1,7 +1,6 @@
 var request = require("request");
 var constants = require("./constants.js");
 
-console.log( "constants: ", constants );
 module.exports = {
     getRepoContributors: function(repoOwner, repoName, cb) {
     var options = {
@@ -15,7 +14,6 @@ module.exports = {
        'pass': constants.accessToken,
       }
     }
-    console.log( "constants: ", constants );
 
     request( options, cb );
   }
